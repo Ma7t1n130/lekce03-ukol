@@ -1,7 +1,10 @@
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class Booking {
     private Room room;
@@ -49,4 +52,31 @@ public class Booking {
                 ", typeOfVacation=" + typeOfVacation +
                 '}';
     }
+
+    public TypeOfVacation getTypeOfVacation() {
+        return typeOfVacation;
+    }
+
+    public int getNumberOfGuests(){
+        return guestList.size();
+    }
+
+    public String customPrint(){
+        DateTimeFormatter dateFormater = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        return checkIn.format(dateFormater) + " - " + checkOut.format(dateFormater) + " " +
+               guestList.getFirst().getFirstName() + " " + guestList.getFirst().getSurName() + " ("+guestList.getFirst().getBirthDate().format(dateFormater)+") " +
+               " ["+ guestList.size() +", "+ room.isSeaLookStr() +"] " +
+               "za " + room.getPricePerNight() + " Kč / noc, " +
+               "tedy " +  getPrice() + "Kč celkem.";
+
+    }
+
+    public long getBookingLength(){
+        return ChronoUnit.DAYS.between(checkIn,checkOut);
+    }
+
+    public BigDecimal getPrice(){
+        return room.getPricePerNight().multiply(BigDecimal.valueOf(getBookingLength()));
+    }
+
 }

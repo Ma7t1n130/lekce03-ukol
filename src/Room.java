@@ -33,6 +33,14 @@ public class Room {
         return isSeaLook;
     }
 
+    public String isSeaLookStr(){
+        if (isSeaLook()){
+            return "ano";
+        } else {
+            return "ne";
+        }
+    }
+
     public BigDecimal getPricePerNight() {
         return pricePerNight;
     }
